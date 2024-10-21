@@ -16,25 +16,25 @@ import time
 import warnings
 from datetime import datetime, timedelta, timezone
 
-from pgpy import PGPKey
-from pgpy import PGPMessage
-from pgpy import PGPSignature
-from pgpy import PGPUID
-from pgpy._curves import _openssl_get_supported_curves
-from pgpy.constants import CompressionAlgorithm
-from pgpy.constants import EllipticCurveOID
-from pgpy.constants import Features
-from pgpy.constants import HashAlgorithm
-from pgpy.constants import KeyFlags
-from pgpy.constants import KeyServerPreferences
-from pgpy.constants import PubKeyAlgorithm
-from pgpy.constants import RevocationReason
-from pgpy.constants import SignatureType
-from pgpy.constants import SymmetricKeyAlgorithm
-from pgpy.errors import PGPError
-from pgpy.packet import Packet
-from pgpy.packet.packets import PrivKeyV4
-from pgpy.packet.packets import PrivSubKeyV4
+from pgpy_dtc import PGPKey
+from pgpy_dtc import PGPMessage
+from pgpy_dtc import PGPSignature
+from pgpy_dtc import PGPUID
+from pgpy_dtc._curves import _openssl_get_supported_curves
+from pgpy_dtc.constants import CompressionAlgorithm
+from pgpy_dtc.constants import EllipticCurveOID
+from pgpy_dtc.constants import Features
+from pgpy_dtc.constants import HashAlgorithm
+from pgpy_dtc.constants import KeyFlags
+from pgpy_dtc.constants import KeyServerPreferences
+from pgpy_dtc.constants import PubKeyAlgorithm
+from pgpy_dtc.constants import RevocationReason
+from pgpy_dtc.constants import SignatureType
+from pgpy_dtc.constants import SymmetricKeyAlgorithm
+from pgpy_dtc.errors import PGPError
+from pgpy_dtc.packet import Packet
+from pgpy_dtc.packet.packets import PrivKeyV4
+from pgpy_dtc.packet.packets import PrivSubKeyV4
 
 
 enc_msgs = [ PGPMessage.from_file(f) for f in sorted(glob.glob('tests/testdata/messages/message*.pass*.asc')) ]

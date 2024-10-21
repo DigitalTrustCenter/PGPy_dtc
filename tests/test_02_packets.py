@@ -5,9 +5,9 @@ import pytest
 import glob
 import os
 
-from pgpy.packet import Packet
-from pgpy.packet import PubKeyV4, PubSubKeyV4, PrivKeyV4, PrivSubKeyV4
-from pgpy.packet import Opaque
+from pgpy_dtc.packet import Packet
+from pgpy_dtc.packet import PubKeyV4, PubSubKeyV4, PrivKeyV4, PrivSubKeyV4
+from pgpy_dtc.packet import Opaque
 
 # import pgpy.packet.fields
 

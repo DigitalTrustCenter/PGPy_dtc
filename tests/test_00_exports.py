@@ -6,18 +6,18 @@ import importlib
 import inspect
 
 
-modules = ['pgpy.constants',
-           'pgpy.decorators',
-           'pgpy.errors',
-           'pgpy.pgp',
-           'pgpy.symenc',
-           'pgpy.types',
-           'pgpy.packet.fields',
-           'pgpy.packet.packets',
-           'pgpy.packet.types',
-           'pgpy.packet.subpackets.signature',
-           'pgpy.packet.subpackets.types',
-           'pgpy.packet.subpackets.userattribute']
+modules = ['pgpy_dtc.constants',
+           'pgpy_dtc.decorators',
+           'pgpy_dtc.errors',
+           'pgpy_dtc.pgp',
+           'pgpy_dtc.symenc',
+           'pgpy_dtc.types',
+           'pgpy_dtc.packet.fields',
+           'pgpy_dtc.packet.packets',
+           'pgpy_dtc.packet.types',
+           'pgpy_dtc.packet.subpackets.signature',
+           'pgpy_dtc.packet.subpackets.types',
+           'pgpy_dtc.packet.subpackets.userattribute']
 
 
 def get_module_objs(module):
@@ -30,9 +30,9 @@ def get_module_all(module):
 
 
 def test_pgpy_all():
-    import pgpy
+    import pgpy_dtc
     # just check that everything in pgpy.__all__ is actually there
-    assert set(pgpy.__all__) <= { n for n, _ in inspect.getmembers(pgpy) }
+    assert set(pgpy_dtc.__all__) <= {n for n, _ in inspect.getmembers(pgpy_dtc)}
 
 
 @pytest.mark.parametrize('modname', modules)

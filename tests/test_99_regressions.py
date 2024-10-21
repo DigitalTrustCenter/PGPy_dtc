@@ -11,8 +11,8 @@ import datetime
 import pytest
 import glob
 import warnings
-from pgpy import PGPKey
-from pgpy.types import Armorable
+from pgpy_dtc import PGPKey
+from pgpy_dtc.types import Armorable
 
 
 @pytest.mark.regression(issue=56)
@@ -21,11 +21,11 @@ def test_reg_bug_56():
     import hashlib
     from datetime import datetime
 
-    from pgpy.pgp import PGPSignature
+    from pgpy_dtc.pgp import PGPSignature
 
-    from pgpy.constants import HashAlgorithm
-    from pgpy.constants import PubKeyAlgorithm
-    from pgpy.constants import SignatureType
+    from pgpy_dtc.constants import HashAlgorithm
+    from pgpy_dtc.constants import PubKeyAlgorithm
+    from pgpy_dtc.constants import SignatureType
 
     from cryptography.hazmat.backends import default_backend
     from cryptography.hazmat.primitives import hashes
@@ -194,8 +194,8 @@ def test_check_checksum(keypkt):
 
 @pytest.mark.regression(issue=183)
 def test_decrypt_unsigned_message():
-    from pgpy import PGPKey, PGPMessage
-    from pgpy.errors import PGPError
+    from pgpy_dtc import PGPKey, PGPMessage
+    from pgpy_dtc.errors import PGPError
 
     # these keys are small because the regression test doesn't really need the security
     # if you're reading this, *DO NOT GENERATE RSA KEYS THIS SMALL*
@@ -255,7 +255,7 @@ def test_decrypt_unsigned_message():
 
 @pytest.mark.regression(194)
 def test_pubkey_subkey_parent():
-    from pgpy import PGPKey
+    from pgpy_dtc import PGPKey
 
     # import this small key that has a subkey
     keyblob = ('-----BEGIN PGP PRIVATE KEY BLOCK-----\n'
@@ -348,7 +348,7 @@ def test_verify_subkey_revocation_signature():
 
 @pytest.mark.regression(issue=243)
 def test_preference_unsupported_ciphers():
-    from pgpy import PGPMessage
+    from pgpy_dtc import PGPMessage
     keyblob = ('-----BEGIN PGP PUBLIC KEY BLOCK-----\n'
                '\n'
                'mQENBFtKbSQBCADDMwreTvJkDQkgB+n0GsNbMFKEjPYGKP365y5w+FlJ2zg69F3W\n'
@@ -387,7 +387,7 @@ def test_preference_unsupported_ciphers():
 
 @pytest.mark.regression(issue=291)
 def test_sig_timezone():
-    from pgpy import PGPKey, PGPSignature
+    from pgpy_dtc import PGPKey, PGPSignature
     # from https://tools.ietf.org/html/draft-bre-openpgp-samples-00#section-2.2:
     alice_sec = '''-----BEGIN PGP PRIVATE KEY BLOCK-----
 Comment: Alice's OpenPGP Transferable Secret Key
@@ -432,7 +432,7 @@ Pnn+We1aTBhaGa86AQ==
 
 @pytest.mark.regression
 def test_ops_order():
-    from pgpy import PGPKey, PGPMessage
+    from pgpy_dtc import PGPKey, PGPMessage
 
     # from https://tools.ietf.org/html/draft-bre-openpgp-samples-00#section-2.2:
     alice_sec = '''-----BEGIN PGP PRIVATE KEY BLOCK-----
@@ -554,7 +554,7 @@ xqAY9Bwizt4FWgXuLm1a4+So4V9j1TRCXd12Uc2l2RNmgDE=
 
 @pytest.mark.regression(issue=341)
 def test_spurious_dash_escapes():
-    from pgpy import PGPKey, PGPMessage
+    from pgpy_dtc import PGPKey, PGPMessage
 
     message_data = r'''-----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1,SHA256
@@ -586,7 +586,7 @@ cjMX82ahGPUVlyMP4A==
 
 @pytest.mark.regression(issue=393)
 def test_preference_no_supported_ciphers():
-    from pgpy import PGPMessage
+    from pgpy_dtc import PGPMessage
     keyblob = '''-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 xo0EYmAayAEEAPQ0oYaLBPIF7bOA71X6kI0j7xnevfaHWfRzCoOJcDH4WJIRDbXD

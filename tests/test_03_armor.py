@@ -6,13 +6,13 @@ import glob
 import os
 from datetime import datetime, timezone
 
-from pgpy.constants import HashAlgorithm
-from pgpy.constants import PubKeyAlgorithm
-from pgpy.constants import SignatureType
-from pgpy.pgp import PGPKey
-from pgpy.pgp import PGPMessage
-from pgpy.pgp import PGPSignature
-from pgpy.types import Armorable
+from pgpy_dtc.constants import HashAlgorithm
+from pgpy_dtc.constants import PubKeyAlgorithm
+from pgpy_dtc.constants import SignatureType
+from pgpy_dtc.pgp import PGPKey
+from pgpy_dtc.pgp import PGPMessage
+from pgpy_dtc.pgp import PGPSignature
+from pgpy_dtc.types import Armorable
 
 
 blocks = sorted(glob.glob('tests/testdata/blocks/*.asc'))

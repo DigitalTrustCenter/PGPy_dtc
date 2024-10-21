@@ -5,24 +5,24 @@ import pytest
 import glob
 import warnings
 
-from pgpy import PGPKey
-from pgpy import PGPKeyring
-from pgpy import PGPMessage
-from pgpy import PGPSignature
-from pgpy import PGPUID
-from pgpy.constants import EllipticCurveOID
-from pgpy.constants import HashAlgorithm
-from pgpy.constants import KeyFlags
-from pgpy.constants import PubKeyAlgorithm
-from pgpy.constants import SymmetricKeyAlgorithm
-from pgpy.packet import Packet
-from pgpy.types import Armorable
-from pgpy.types import Fingerprint
-from pgpy.types import SignatureVerification
-from pgpy.errors import PGPError
-from pgpy.errors import PGPDecryptionError
-from pgpy.errors import PGPEncryptionError
-from pgpy.errors import PGPInsecureCipherError
+from pgpy_dtc import PGPKey
+from pgpy_dtc import PGPKeyring
+from pgpy_dtc import PGPMessage
+from pgpy_dtc import PGPSignature
+from pgpy_dtc import PGPUID
+from pgpy_dtc.constants import EllipticCurveOID
+from pgpy_dtc.constants import HashAlgorithm
+from pgpy_dtc.constants import KeyFlags
+from pgpy_dtc.constants import PubKeyAlgorithm
+from pgpy_dtc.constants import SymmetricKeyAlgorithm
+from pgpy_dtc.packet import Packet
+from pgpy_dtc.types import Armorable
+from pgpy_dtc.types import Fingerprint
+from pgpy_dtc.types import SignatureVerification
+from pgpy_dtc.errors import PGPError
+from pgpy_dtc.errors import PGPDecryptionError
+from pgpy_dtc.errors import PGPEncryptionError
+from pgpy_dtc.errors import PGPInsecureCipherError
 
 
 def _read(f, mode='r'):

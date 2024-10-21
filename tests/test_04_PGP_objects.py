@@ -4,12 +4,12 @@ import pytest
 import glob
 import os
 
-from pgpy import PGPKey
-from pgpy import PGPKeyring
-from pgpy import PGPMessage
-from pgpy import PGPSignature
-from pgpy import PGPUID
-from pgpy.types import Fingerprint
+from pgpy_dtc import PGPKey
+from pgpy_dtc import PGPKeyring
+from pgpy_dtc import PGPMessage
+from pgpy_dtc import PGPSignature
+from pgpy_dtc import PGPUID
+from pgpy_dtc.types import Fingerprint
 
 
 @pytest.fixture

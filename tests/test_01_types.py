@@ -3,7 +3,7 @@
 """
 import pytest
 
-from pgpy.types import PGPObject
+from pgpy_dtc.types import PGPObject
 
 text = {
     # some basic utf-8 test strings - these should all pass
