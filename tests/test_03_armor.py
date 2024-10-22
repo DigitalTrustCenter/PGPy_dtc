@@ -15,9 +15,10 @@ from pgpy_dtc.pgp import PGPSignature
 from pgpy_dtc.types import Armorable
 
 
-blocks = sorted(glob.glob('tests/testdata/blocks/*.asc'))
+test_path = os.path.join("tests", "testdata", "blocks")
+blocks = sorted(glob.glob(os.path.join(test_path, '*.asc')))
 block_attrs = {
-    'tests/testdata/blocks/message.ascii.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.ascii.asc'):
         [('encrypters',    set()),
          ('filename',      'ascii'),
          ('is_compressed', False),
@@ -28,7 +29,7 @@ block_attrs = {
          ('signers',       set()),
          ('type',          'literal'),],
 
-    'tests/testdata/blocks/message.compressed.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.compressed.asc'):
         [('encrypters',    set()),
          ('filename',      'lit'),
          ('is_compressed', True),
@@ -39,7 +40,7 @@ block_attrs = {
          ('signers',       set()),
          ('type',          'literal'),],
 
-    'tests/testdata/blocks/message.literal.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.literal.asc'):
         [('encrypters',    set()),
          ('filename',      'lit'),
          ('is_compressed', False),
@@ -50,7 +51,7 @@ block_attrs = {
          ('signers',       set()),
          ('type',          'literal'),],
 
-    'tests/testdata/blocks/message.onepass.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.onepass.asc'):
         [('encrypters',    set()),
          ('filename',      'lit'),
          ('is_compressed', False),
@@ -61,7 +62,7 @@ block_attrs = {
          ('signers',       {'2A834D8E5918E886'}),
          ('type',          'literal'),],
 
-    'tests/testdata/blocks/message.two_onepass.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.two_onepass.asc'):
         [('encrypters',    set()),
          ('filename',      'lit'),
          ('is_compressed', False),
@@ -72,7 +73,7 @@ block_attrs = {
          ('signers',       {'2A834D8E5918E886', 'A5DCDC966453140E'}),
          ('type',          'literal'),],
 
-    'tests/testdata/blocks/message.signed.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.signed.asc'):
         [('encrypters',    set()),
          ('filename',      'lit'),
          ('is_compressed', False),
@@ -83,7 +84,7 @@ block_attrs = {
          ('signers',       {'2A834D8E5918E886'}),
          ('type',         'literal'),],
 
-    'tests/testdata/blocks/cleartext.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'cleartext.asc'):
         [('encrypters',    set()),
          ('is_compressed', False),
          ('is_encrypted',  False),
@@ -93,7 +94,7 @@ block_attrs = {
          ('signers',       {'2A834D8E5918E886'}),
          ('type',          'cleartext'),],
 
-    'tests/testdata/blocks/cleartext.twosigs.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'cleartext.twosigs.asc'):
         [('encrypters',    set()),
          ('is_compressed', False),
          ('is_encrypted',  False),
@@ -103,7 +104,7 @@ block_attrs = {
          ('signers',       {'2A834D8E5918E886', 'A5DCDC966453140E'}),
          ('type',          'cleartext'),],
 
-    'tests/testdata/blocks/message.encrypted.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.encrypted.asc'):
         [('encrypters',    {'EEE097A017B979CA'}),
          ('is_compressed', False),
          ('is_encrypted',  True),
@@ -112,7 +113,7 @@ block_attrs = {
          ('signers',       set()),
          ('type',          'encrypted')],
 
-    'tests/testdata/blocks/message.encrypted.signed.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.encrypted.signed.asc'):
         [('encrypters',    {'EEE097A017B979CA'}),
          ('is_compressed', False),
          ('is_encrypted',  True),
@@ -121,7 +122,7 @@ block_attrs = {
          ('signers',       set()),
          ('type',          'encrypted')],
 
-    'tests/testdata/blocks/message.ecc.encrypted.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'message.ecc.encrypted.asc'):
         [('encrypters',    {'77CEB7A34089AB73'}),
          ('is_compressed', False),
          ('is_encrypted',  True),
@@ -130,7 +131,7 @@ block_attrs = {
          ('signers',       set()),
          ('type',          'encrypted')],
 
-    'tests/testdata/blocks/revochiio.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'revochiio.asc'):
         [('created',       datetime(2014, 9, 11, 22, 55, 53, tzinfo=timezone.utc)),
          ('fingerprint',   "AE15 9FF3 4C1A 2426 B7F8 0F1A 560C F308 EF60 CFA3"),
          ('expires_at',    datetime(2018, 9, 12, 1, 0, 59, tzinfo=timezone.utc)),
@@ -144,13 +145,13 @@ block_attrs = {
          ('parent',        None),
          ('signers',       {'560CF308EF60CFA3'}),],
 
-    'tests/testdata/blocks/expyro.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'expyro.asc'):
         [('created',       datetime(1970, 1, 1, tzinfo=timezone.utc)),
          ('expires_at',    datetime(1970, 1, 2, tzinfo=timezone.utc)),
          ('fingerprint',   '24EB C1B0 29B1 FCF8 29A5  C150 1A48 291A FB91 A533'),
          ('is_expired',    True),],
 
-    'tests/testdata/blocks/rsapubkey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'rsapubkey.asc'):
         [('created',       datetime(2014, 7, 23, 21, 19, 24, tzinfo=timezone.utc)),
          ('expires_at',    None),
          ('fingerprint',   "F429 4BC8 094A 7E05 85C8 5E86 3747 3B37 58C4 4F36"),
@@ -164,7 +165,7 @@ block_attrs = {
          ('parent',        None),
          ('signers',       set()),],
 
-    'tests/testdata/blocks/rsaseckey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'rsaseckey.asc'):
         [('created',       datetime(2014, 7, 23, 21, 19, 24, tzinfo=timezone.utc)),
          ('expires_at',    None),
          ('fingerprint',   "F429 4BC8 094A 7E05 85C8 5E86 3747 3B37 58C4 4F36"),
@@ -178,7 +179,7 @@ block_attrs = {
          ('parent',        None),
          ('signers',       set()),],
 
-    'tests/testdata/blocks/rsasignature.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'rsasignature.asc'):
         [('__sig__',       b'\x70\x38\x79\xd0\x58\x70\x58\x7b\x50\xe6\xab\x8f\x9d\xc3\x46\x2c\x5a\x6b\x98\x96\xcf'
                    b'\x3b\xa3\x79\x13\x08\x6d\x90\x9d\x67\xd2\x48\x7d\xd7\x1a\xa5\x98\xa7\x8f\xca\xe3\x24'
                    b'\xd4\x19\xab\xe5\x45\xc5\xff\x21\x0c\x72\x88\x91\xe6\x67\xd7\xe5\x00\xb3\xf5\x55\x0b'
@@ -208,7 +209,7 @@ block_attrs = {
          ('signer',         'FCAE54F74BA27CF7'),
          ('type',           SignatureType.BinaryDocument)],
 
-    'tests/testdata/blocks/eccpubkey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'eccpubkey.asc'):
         [('created',       datetime(2010, 9, 17, 20, 33, 49, tzinfo=timezone.utc)),
          ('expires_at',    None),
          ('fingerprint',   "502D 1A53 65D1 C0CA A699 4539 0BA5 2DF0 BAA5 9D9C"),
@@ -222,7 +223,7 @@ block_attrs = {
          ('parent',        None),
          ('signers',       set()),],
 
-    'tests/testdata/blocks/eccseckey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'eccseckey.asc'):
         [('created',       datetime(2010, 9, 17, 20, 33, 49, tzinfo=timezone.utc)),
          ('expires_at',    None),
          ('fingerprint',   "502D 1A53 65D1 C0CA A699 4539 0BA5 2DF0 BAA5 9D9C"),
@@ -236,7 +237,7 @@ block_attrs = {
          ('parent',        None),
          ('signers',       set()),],
 
-    'tests/testdata/blocks/dsaseckey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'dsaseckey.asc'):
         [('created',       datetime(2017, 2, 21, 19, 21, 41, tzinfo=timezone.utc)),
          ('expires_at',    None),
          ('fingerprint',   "2B5B BB14 3BA0 B290 DCEE 6668 B798 AE89 9087 7201"),
@@ -247,7 +248,7 @@ block_attrs = {
          ('is_unlocked',   False),
          ('key_algorithm', PubKeyAlgorithm.DSA),],
 
-    'tests/testdata/blocks/dsapubkey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'dsapubkey.asc'):
         [('created',       datetime(2017, 2, 21, 19, 21, 41, tzinfo=timezone.utc)),
          ('expires_at',    None),
          ('fingerprint',   "2B5B BB14 3BA0 B290 DCEE 6668 B798 AE89 9087 7201"),
@@ -258,7 +259,7 @@ block_attrs = {
          ('is_unlocked',   True),
          ('key_algorithm', PubKeyAlgorithm.DSA),],
 
-    'tests/testdata/blocks/openpgp.js.pubkey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'openpgp.js.pubkey.asc'):
         [('created',        datetime(2016, 6, 2, 21, 57, 13, tzinfo=timezone.utc)),
          ('expires_at',     None),
          ('fingerprint',    "C7C3 8ECE E94A 4AD3 2DDB  064E 14AB 44C7 4D1B DAB8"),
@@ -272,7 +273,7 @@ block_attrs = {
          ('parent',         None),
          ('signers',        set()), ],
 
-    'tests/testdata/blocks/openpgp.js.seckey.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'openpgp.js.seckey.asc'):
         [('created',        datetime(2016, 6, 2, 21, 57, 13, tzinfo=timezone.utc)),
          ('expires_at',     None),
          ('fingerprint',    "C7C3 8ECE E94A 4AD3 2DDB  064E 14AB 44C7 4D1B DAB8"),
@@ -286,11 +287,11 @@ block_attrs = {
          ('parent',         None),
          ('signers',        set()), ],
 
-    'tests/testdata/blocks/signature.expired.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'signature.expired.asc'):
         [('created',       datetime(2014, 9, 28, 20, 54, 42, tzinfo=timezone.utc)),
          ('is_expired',    True),],
 
-    'tests/testdata/blocks/signature.non-exportable.asc':
+    os.path.join('tests', 'testdata', 'blocks', 'signature.non-exportable.asc'):
         [('created',       datetime(2017, 2, 21, 20, 43, 34, tzinfo=timezone.utc)),
          ('exportable',    False),]
 }

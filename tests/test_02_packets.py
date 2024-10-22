@@ -55,7 +55,7 @@ class TestPacket(object):
 
         # length is computed correctly
         assert p.header.length + len(p.header) == len(p)
-        if packet not in ('tests/testdata/packets/11.partial.literal',):
+        if "11.partial.literal" not in packet:
             assert len(p) == len(b) - len(_trailer)
             assert len(p.__bytes__()) == len(b) - len(_trailer)
 

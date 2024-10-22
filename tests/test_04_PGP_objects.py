@@ -3,6 +3,7 @@
 import pytest
 import glob
 import os
+from pathlib import Path
 
 from pgpy_dtc import PGPKey
 from pgpy_dtc import PGPKeyring
@@ -14,14 +15,14 @@ from pgpy_dtc.types import Fingerprint
 
 @pytest.fixture
 def abe_image():
-    with open('tests/testdata/abe.jpg', 'rb') as abef:
-        abebytes = bytearray(os.path.getsize('tests/testdata/abe.jpg'))
-        abef.readinto(abebytes)
+    with open(os.path.join('tests', 'testdata', 'abe.jpg'), 'rb') as abe:
+        abebytes = bytearray(os.path.getsize(os.path.join('tests', 'testdata', 'abe.jpg')))
+        abe.readinto(abebytes)
 
     return PGPUID.new(abebytes)
 
 
-_msgfiles = sorted(glob.glob('tests/testdata/messages/*.asc'))
+_msgfiles = sorted(glob.glob(os.path.join('tests', 'testdata', 'messages', '*.asc')))
 
 
 class TestPGPMessage(object):
@@ -74,8 +75,8 @@ class TestPGPUID(object):
         assert abe_image.name == ""
         assert abe_image.comment == ""
         assert abe_image.email == ""
-        with open('tests/testdata/abe.jpg', 'rb') as abef:
-            abebytes = bytearray(os.path.getsize('tests/testdata/abe.jpg'))
+        with open(os.path.join('tests', 'testdata', 'abe.jpg'), 'rb') as abef:
+            abebytes = bytearray(os.path.getsize(os.path.join('tests', 'testdata', 'abe.jpg')))
             abef.readinto(abebytes)
         assert abe_image.image == abebytes
 
@@ -86,7 +87,7 @@ class TestPGPUID(object):
         assert "{:s}".format(unce) == 'Temperair\xe9e Youx\'seur (\u2603) <snowman@not.an.email.addre.ss>'
 
 
-_keyfiles = sorted(glob.glob('tests/testdata/blocks/*key*.asc'))
+_keyfiles = sorted(glob.glob(os.path.join('tests', 'testdata', 'blocks', '*key*.asc')))
 _fingerprints = {'dsapubkey.asc': '2B5BBB143BA0B290DCEE6668B798AE8990877201',
                  'dsaseckey.asc': '2B5BBB143BA0B290DCEE6668B798AE8990877201',
                  'eccpubkey.asc': '502D1A5365D1C0CAA69945390BA52DF0BAA59D9C',
@@ -130,7 +131,7 @@ class TestPGPKey(object):
 
         assert key.fingerprint == _fingerprints[os.path.basename(kf)]
 
-    @pytest.mark.parametrize('kf', sorted(filter(lambda f: not f.endswith('enc.asc'), glob.glob('tests/testdata/keys/*.asc'))))
+    @pytest.mark.parametrize('kf', sorted(filter(lambda f: not f.endswith('enc.asc'), glob.glob(os.path.join('tests', 'testdata', 'keys', '*.asc')))))
     def test_save(self, kf):
         # load the key and export it back to binary
         key, _ = PGPKey.from_file(kf)
@@ -148,9 +149,10 @@ def keyring():
 
 
 class TestPGPKeyring(object):
+
     def test_load(self, keyring):
         # load from filenames
-        keys = keyring.load(glob.glob('tests/testdata/*test.asc'), glob.glob('tests/testdata/signatures/*.key.asc'))
+        keys = keyring.load(glob.glob(os.path.join('tests', 'testdata', '*test.asc')), glob.glob(os.path.join('tests', 'testdata', 'signatures', '*.key.asc')))
 
         # keys
         assert all(isinstance(k, Fingerprint) for k in keys)

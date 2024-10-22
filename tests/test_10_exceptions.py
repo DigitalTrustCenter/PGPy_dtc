@@ -2,6 +2,7 @@
 """
 import pytest
 
+import os
 import glob
 import warnings
 
@@ -32,27 +33,27 @@ def _read(f, mode='r'):
 
 @pytest.fixture(scope='module')
 def rsa_sec():
-    return PGPKey.from_file('tests/testdata/keys/rsa.1.sec.asc')[0]
+    return PGPKey.from_file(os.path.join('tests', 'testdata', 'keys', 'rsa.1.sec.asc'))[0]
 
 
 @pytest.fixture(scope='module')
 def rsa_enc():
-    return PGPKey.from_file('tests/testdata/keys/rsa.1.enc.asc')[0]
+    return PGPKey.from_file(os.path.join('tests', 'testdata', 'keys', 'rsa.1.enc.asc'))[0]
 
 
 @pytest.fixture(scope='module')
 def rsa_pub():
-    return PGPKey.from_file('tests/testdata/keys/rsa.1.pub.asc')[0]
+    return PGPKey.from_file(os.path.join('tests', 'testdata', 'keys', 'rsa.1.pub.asc'))[0]
 
 
 @pytest.fixture(scope='module')
 def targette_sec():
-    return PGPKey.from_file('tests/testdata/keys/targette.sec.rsa.asc')[0]
+    return PGPKey.from_file(os.path.join('tests', 'testdata', 'keys', 'targette.sec.rsa.asc'))[0]
 
 
 @pytest.fixture(scope='module')
 def targette_pub():
-    return PGPKey.from_file('tests/testdata/keys/targette.pub.rsa.asc')[0]
+    return PGPKey.from_file(os.path.join('tests', 'testdata', 'keys', 'targette.pub.rsa.asc'))[0]
 
 
 @pytest.fixture(scope='module')
@@ -72,9 +73,9 @@ def temp_key():
     return k
 
 
-key_algs = [ pka for pka in PubKeyAlgorithm if pka.can_gen and not pka.deprecated ]
-key_algs_unim = [ pka for pka in PubKeyAlgorithm if not pka.can_gen and not pka.deprecated ]
-key_algs_rsa_depr = [ pka for pka in PubKeyAlgorithm if pka.deprecated and pka is not PubKeyAlgorithm.FormerlyElGamalEncryptOrSign ]
+key_algs = [pka for pka in PubKeyAlgorithm if pka.can_gen and not pka.deprecated]
+key_algs_unim = [pka for pka in PubKeyAlgorithm if not pka.can_gen and not pka.deprecated]
+key_algs_rsa_depr = [pka for pka in PubKeyAlgorithm if pka.deprecated and pka is not PubKeyAlgorithm.FormerlyElGamalEncryptOrSign]
 
 key_algs_badsizes = {
     PubKeyAlgorithm.RSAEncryptOrSign: [256],
@@ -82,7 +83,7 @@ key_algs_badsizes = {
     PubKeyAlgorithm.ECDSA: [curve for curve in EllipticCurveOID if not curve.can_gen],
     PubKeyAlgorithm.ECDH: [curve for curve in EllipticCurveOID if not curve.can_gen],
 }
-badkeyspec = [ (alg, size) for alg in key_algs_badsizes.keys() for size in key_algs_badsizes[alg] ]
+badkeyspec = [(alg, size) for alg in key_algs_badsizes.keys() for size in key_algs_badsizes[alg]]
 
 
 class TestArmorable(object):
@@ -248,7 +249,7 @@ class TestPGPKey(object):
             rsa_sec.verify("asdf", signature=12)
 
     def test_verify_nosigs(self, rsa_sec):
-        msg = PGPMessage.new('tests/testdata/lit')
+        msg = PGPMessage.new(os.path.join('tests', 'testdata', 'lit'))
         with pytest.raises(PGPError):
             rsa_sec.verify(msg)
 
@@ -259,13 +260,13 @@ class TestPGPKey(object):
             assert not rsa_sec.verify("Text 2", sig)
 
     def test_parse_wrong_magic(self):
-        keytext = _read('tests/testdata/keys/rsa.1.sec.asc').replace('KEY', 'EKY')
+        keytext = _read(os.path.join('tests', 'testdata', 'keys', 'rsa.1.sec.asc')).replace('KEY', 'EKY')
         key = PGPKey()
         with pytest.raises(ValueError):
             key.parse(keytext)
 
     def test_parse_wrong_crc24(self, recwarn):
-        keytext = _read('tests/testdata/keys/rsa.1.sec.asc').splitlines()
+        keytext = _read(os.path.join('tests', 'testdata', 'keys', 'rsa.1.sec.asc')).splitlines()
         keytext[-2] = "=abcd"
         keytext = '\n'.join(keytext)
         key = PGPKey()
