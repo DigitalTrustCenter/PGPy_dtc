@@ -75,7 +75,8 @@ __all__ = ['PKESessionKey',
            'UserAttribute',
            'IntegrityProtectedSKEData',
            'IntegrityProtectedSKEDataV1',
-           'MDC']
+           'MDC',
+           'AEADPacket']
 
 
 class PKESessionKey(VersionedPacket):
@@ -1627,3 +1628,20 @@ class MDC(Packet):
         super(MDC, self).parse(packet)
         self.mdc = binascii.hexlify(packet[:20])
         del packet[:20]
+
+
+class AEADPacket(Packet):
+    """
+    AEAD Packet (Tag 20)
+    TODO: implement?
+    """
+    __typeid__ = 0x14
+
+    def __init__(self):
+        super(AEADPacket, self).__init__()
+
+    def __bytearray__(self):
+        return super(AEADPacket, self).__bytearray__()
+
+    def parse(self, packet):
+        super(AEADPacket, self).parse(packet)

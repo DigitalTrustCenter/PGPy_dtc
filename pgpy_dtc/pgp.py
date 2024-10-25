@@ -43,6 +43,7 @@ from .errors import PGPError
 
 from .packet import Key
 from .packet import MDC
+from .packet import AEADPacket
 from .packet import Packet
 from .packet import Primary
 from .packet import Private
@@ -1077,6 +1078,9 @@ class PGPMessage(Armorable, PGPObject):
             self._signatures += other._signatures
             return self
 
+        if isinstance(other, AEADPacket):
+            raise NotImplementedError(str(type(other)))
+
         raise NotImplementedError(str(type(other)))
 
     def __copy__(self):
@@ -1277,7 +1281,7 @@ class PGPMessage(Armorable, PGPObject):
             self.ascii_headers = unarmored['headers']
 
         # cleartext signature
-        if unarmored['magic'] == 'SIGNATURE':
+        if unarmored['magic'] == 'SIGNATURE' and unarmored['cleartext']:
             # the composition for this will be the 'cleartext' as a str,
             # followed by one or more signatures (each one loaded into a PGPSignature)
             self |= self.dash_unescape(unarmored['cleartext'])
