@@ -68,6 +68,10 @@ class Armorable(metaclass=abc.ABCMeta):
                          ^-{5}END\ PGP\ (?P=magic)-{5}(?:\r?\n)?
                          """, flags=re.MULTILINE | re.VERBOSE)
 
+    __begin_signed = re.compile(r"^-{5}BEGIN\ PGP\ SIGNED\ MESSAGE-{5}(?:\r?\n)", flags=re.DOTALL)
+    __begin_pgp = re.compile(r"(?<=\n)-{5}BEGIN\ PGP\ (?P<magic>[A-Z0-9 ,]+)-{5}(?:\r?\n)", flags=re.DOTALL)
+    __end_pgp = re.compile(r"(?<=\n)-{5}END\ PGP\ (?P<magic>[A-Z0-9 ,]+)-{5}(?:\r?\n)", flags=re.DOTALL)
+
     @property
     def charset(self):
         return self.ascii_headers.get('Charset', 'utf-8')
@@ -142,6 +146,13 @@ class Armorable(metaclass=abc.ABCMeta):
             m['crc'] = Header.bytes_to_int(base64.b64decode(m['crc'].encode()))
             if Armorable.crc24(m['body']) != m['crc']:
                 warnings.warn('Incorrect crc24', stacklevel=3)
+
+        # These lines should either not be present or be present exactly once
+        m_begin_signed = Armorable.__begin_signed.findall(text)
+        m_begin_pgp = Armorable.__begin_pgp.findall(text)
+        m_end_pgp = Armorable.__end_pgp.findall(text)
+        if len(m_begin_signed) >= 2 or len(m_begin_pgp) >= 2 or len(m_end_pgp) >= 2:
+            raise ValueError("PGP not formatted correctly")
 
         return m
 
